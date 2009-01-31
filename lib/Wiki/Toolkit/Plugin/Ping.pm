@@ -10,7 +10,7 @@ use LWP;
 use LWP::UserAgent;
 
 @ISA = qw( Wiki::Toolkit::Plugin );
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 
 # Set things up
@@ -36,6 +36,7 @@ sub new {
         die("node_to_url '$args{node_to_url}' must contain \$node");
     }
     $self->{node_to_url} = $args{node_to_url};
+    $self->{agent} = $args{agent} || "Wiki::Toolkit::Plugin::Ping $VERSION";
     
 
     # Check the services
@@ -97,7 +98,7 @@ sub post_write {
 
         # Get a LWP instance
         my $ua = LWP::UserAgent->new;
-        $ua->agent("Wiki::Toolkit::Plugin::Ping $version");        
+        $ua->agent($self->{agent});
 
         # Ping each service
         foreach my $service (keys %{$self->{services}}) {
@@ -140,7 +141,8 @@ Wiki::Toolkit::Plugin::Ping - "ping" various services when nodes are written
             node_to_url => 'http://mywiki/$node',
             services => {
                     "geourl" => 'http://geourl.org/ping?p=$url'
-            }
+            },
+            agent    => "My Wiki ping agent",
   );
   $wiki->register_pugin( plugin => $ping );
 
@@ -151,7 +153,8 @@ when a node is written. A list of the services to ping, and where in their
 URLs to add the URL of the node, are supplied when the plugin is created.
 
 You need to tell it how to turn a node into a URL (node_to_url), and what
-services to ping (services).
+services to ping (services). You can optionally pass a custom user-agent
+string
 
 =head1 AUTHOR
 
@@ -159,9 +162,9 @@ The Wiki::Toolkit team (http://www.wiki-toolkit.org/)
 
 =head1 COPYRIGHT
 
-     Copyright (C) 2003-2004 I. P. Williams (ivorw_openguides [at] xemaps {dot} com).
-     Copyright (C) 2006 the Wiki::Toolkit team (http://www.wiki-toolkit.org/)
-     All Rights Reserved.
+Copyright (C) 2003-2004 I. P. Williams (ivorw_openguides [at] xemaps {dot} com).
+Copyright (C) 2006-2009 the Wiki::Toolkit team (http://www.wiki-toolkit.org/)
+All Rights Reserved.
 
 This module is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
