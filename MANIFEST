@@ -4,5 +4,6 @@ lib/Wiki/Toolkit/Plugin/Ping.pm
 Makefile.PL
 README
 MANIFEST
+Changes
 META.yml                                 Module meta-data (added by MakeMaker)
 SIGNATURE                                Public-key signature (added by MakeMaker)

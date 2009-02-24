@@ -10,7 +10,7 @@ use LWP;
 use LWP::UserAgent;
 
 @ISA = qw( Wiki::Toolkit::Plugin );
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 
 # Set things up
